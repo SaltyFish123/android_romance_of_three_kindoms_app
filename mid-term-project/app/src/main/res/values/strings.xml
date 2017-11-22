@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">三国词典</string>
+    <string name="enc_name">Enchated Forest</string>
+    <string name="enc_price">¥ 5.00</string>
+    <string name="enc_info">作者 Johanna Basford</string>
+    <string name="arl_name">Arla Milk</string>
+    <string name="arl_price">¥ 59.00</string>
+    <string name="arl_info">产地 德国</string>
+    <string name="dev_name">Devondale Milk</string>
+    <string name="dev_price"> ¥ 79.00</string>
+    <string name="dev_info">产地 澳大利亚</string>
+    <string name="kin_name">Kindle Oasis</string>
+    <string name="kin_price">¥ 2399.00</string>
+    <string name="kin_info">版本 8GB</string>
+    <string name="wai_name">waitrose 早餐麦片</string>
+    <string name="wai_price">¥ 179.00</string>
+    <string name="wai_info">重量 2Kg</string>
+    <string name="mcv_name">Mcvitie\'s 饼干</string>
+    <string name="mcv_price">¥ 14.90</string>
+    <string name="mcv_info">产地 英国</string>
+    <string name="fer_name">Ferrero Rocher</string>
+    <string name="fer_price">¥ 132.59 </string>
+    <string name="fer_info">重量 300g</string>
+    <string name="mal_name">Maltesers </string>
+    <string name="mal_price">¥ 141.43 </string>
+    <string name="mal_info">重量 118g</string>
+    <string name="lin_name">Lindt</string>
+    <string name="lin_price">¥ 139.43</string>
+    <string name="lin_info">重量 249g</string>
+    <string name="bor_name">Borggreve</string>
+    <string name="bor_price">¥ 28.90</string>
+    <string name="bor_info">重量 640g</string>
+    <string name="warning">请输入您想查找的人物或势力</string>
+</resources>
