@@ -6,13 +6,16 @@
 mydb = new Character(this);
 ```
 
-我的getCharacterData 函数返回的Cursor类型实际上是我从数据库调用select语句后得到的那些数据，可以像一下语句一样提取其中的数据：
+我的getCharacterData 函数返回的Cursor类型实际上是我从数据库调用select语句后得到的那些数据，可以像一下语句一样提取其中的数据， 可以调用Cursor.isNull()看看是否为空，所以也可用于搜索：
 
 ```java
 Cursor res = mydb.getCharacterData(character_name);
 int sex = res.getInt(res.getColumnIndex(Character.SEX));
 String birthday = res.getString(res.getColumnIndex(Character.BIRTHDAY))；
 //There can some familiar code to get the data
+if (res.isNull()) {
+  boolean noSuchCharacter = true;
+}
 if (!res.isClosed()) {
   res.close();
 }
