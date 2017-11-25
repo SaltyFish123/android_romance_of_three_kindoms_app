@@ -1,152 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jason.lab5.Infor">
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/line1"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/line2"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.28" />
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/line3"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/charactor"
-        android:scaleType="fitCenter"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/line1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-    <ImageView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/back"
-        android:src="@drawable/back"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/line3"
-        android:layout_marginTop="15dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/charactor_name"
-        android:textSize="15sp"
-        android:textColor="#D5000000"
-        app:layout_constraintLeft_toLeftOf="@+id/line3"
-        app:layout_constraintBottom_toTopOf="@+id/line2" />
+    android:orientation="vertical"
+    android:background="@drawable/background">
+
     <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:id="@+id/infor"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/line1">
-        <TextView
+        android:layout_width="367dp"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/charactor"
+            android:scaleType="fitCenter"
+            android:background="@android:color/darker_gray"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
+            android:layout_centerInParent="true" />
+        <ImageView
             android:layout_height="wrap_content"
-            android:id="@+id/info1"
-            android:layout_alignParentStart="true"
-            android:text="temp"
-            android:textSize="15sp"
-            android:textColor="#D5000000"
-            android:layout_margin="10dp"/>
-        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/more_info"
-            android:layout_alignStart="@id/info1"
-            android:layout_alignParentBottom="true"
-            android:text="temp"
-            android:textSize="15sp"
-            android:textColor="#8A000000"
-            android:layout_marginBottom="10dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#1E000000"
-            android:layout_alignParentBottom="true"/>
+            android:id="@+id/back"
+            android:src="@drawable/back"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentTop="true"/>
     </RelativeLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infor">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textColor="#D5000000"
-            android:textSize="20sp"
-            android:text="temp"
-            android:gravity="center_vertical"
-            android:layout_marginStart="5dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="#1E000000"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textColor="#D5000000"
-            android:textSize="20sp"
-            android:text="temp"
-            android:gravity="center_vertical"
-            android:layout_marginStart="5dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#1E000000"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textColor="#D5000000"
-            android:textSize="20sp"
-            android:text="temp"
-            android:gravity="center_vertical"
-            android:layout_marginStart="5dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#1E000000"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textColor="#D5000000"
-            android:textSize="20sp"
-            android:text="temp"
-            android:gravity="center_vertical"
-            android:layout_marginStart="5dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#1E000000"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textColor="#D5000000"
-            android:textSize="20sp"
-            android:text="temp"
-            android:gravity="center_vertical"
-            android:layout_marginStart="5dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#1E000000"/>
-    </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="368dp"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <EditText
+            android:id="@+id/charactor_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:focusable="false"
+            android:hint="姓名"
+            android:textSize="30sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/charactor_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:focusable="false"
+            android:hint="性别"
+            android:textSize="30sp"
+            app:layout_constraintTop_toBottomOf="@id/charactor_name" />
+
+        <EditText
+            android:id="@+id/charactor_life"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:focusable="false"
+            android:hint="生年卒月"
+            android:textSize="30sp"
+            app:layout_constraintTop_toBottomOf="@id/charactor_gender" />
+
+        <EditText
+            android:id="@+id/charactor_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:focusable="false"
+            android:hint="籍贯"
+            android:textSize="30sp"
+            app:layout_constraintTop_toBottomOf="@id/charactor_life" />
+
+        <EditText
+            android:id="@+id/charactor_belong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:focusable="false"
+            android:hint="主效势力"
+            android:textSize="30sp"
+            app:layout_constraintTop_toBottomOf="@id/charactor_place" />
+        <Button
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编辑"
+            android:textSize="30sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除"
+            android:textSize="30sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="50dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存"
+            android:visibility="gone"
+            android:enabled="false"
+            android:textSize="30sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:visibility="gone"
+            android:enabled="false"
+            android:textSize="30sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="50dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>
