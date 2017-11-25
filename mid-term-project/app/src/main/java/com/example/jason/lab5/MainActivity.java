@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 "simayi", "huatuo"};
         String[] kingdom = new String[] { "wei", "shu", "wu", "qun", "qun",
                 "qun", "wu", "shu", "wei", "qun"};
-        // initial the data of rectclerview
+        // initial the data of recyclerview
         for (int i = 0; i < 10; i++) {
             Map<String, Object> temp = new LinkedHashMap<>();
             temp.put("name", charactor_name[i]);
