@@ -1,11 +1,13 @@
 package com.example.jason.lab5;
 
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     //data用于存放recyclerview中的数据
     private List<Map<String, Object>> data = new ArrayList<>();
     private RecyclerView mRecyclerView;
+    private Character mydb;
+    private String[] kingdom = new String[] {"wei", "shu", "wu", "qun"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mydb = new Character(this);
 
         setMainPageData(); // initial the data of recyclerview
 
@@ -99,6 +105,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setMainPageData() {
+        Map<String, Object> temp = new LinkedHashMap<>();
+        Cursor character = mydb.getCharacterData("曹操");
+        temp.put("name", character.getString(character.getColumnIndex(Character.CHARACTER_NAME)));
+        temp.put("key", "caocao");
+        temp.put("kingdom", kingdom[character.getInt(character.getColumnIndex(Character.KINGDOM))]);
+        data.add(temp);
+        /*
         String[] charactor_name = new String[] { "曹操", "刘备", "孙权",
                 "董卓", "袁绍","张角", "周瑜", "诸葛亮", "司马懿" , "华佗"  };
         String[] key = new String[] { "caocao", "liubei", "sunquan",
@@ -114,5 +127,6 @@ public class MainActivity extends AppCompatActivity {
             temp.put("kingdom", kingdom[i]);
             data.add(temp);
         }
+        */
     }
 }
