@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto"> 
+    <item android:id="@+id/search_button"
+          android:icon="@drawable/search"
+          android:title="search"
+          android:orderInCategory="1"
+          yourapp:showAsAction="ifRoom"/>  
+    <item android:id="@+id/add_button"
+        android:icon="@drawable/add"
+        android:title="add"
+        android:orderInCategory="1"
+        yourapp:showAsAction="ifRoom"/> 
+</menu>

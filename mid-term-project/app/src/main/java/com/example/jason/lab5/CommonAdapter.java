@@ -1,13 +1,18 @@
 package com.example.jason.lab5;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.R.attr.animation;
 
 /**
  * Created by Jason on 2017/10/21.
@@ -18,6 +23,8 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
     private int mLayoutId;
     private List<T> mDatas;
     private OnItemClickListener mOnItemClickListener;
+
+
     public CommonAdapter(Context context, int layoutId, List<T> datas) {
         mContext = context;
         mLayoutId = layoutId;

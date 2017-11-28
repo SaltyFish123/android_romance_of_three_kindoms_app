@@ -1,14 +1,22 @@
 package com.example.jason.lab5;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,22 +27,23 @@ import java.util.List;
 import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
-    //data用于存放所有的数据
-    private List<Map<String, Object>> data = new ArrayList<>();
     //tempdata用于存放每次的查询结果
     private List<Map<String, Object>> tempdata = new ArrayList<>();
+    private DBHelper dbHelper;
+    private CommonAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        ActionBar bar = getSupportActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setTitle("人物信息搜索");
+
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_search);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //初始化data的数据
-        initialSearchPageData();
-        final CommonAdapter adapter =
-                new CommonAdapter<Map<String, Object>>(this, R.layout.item_list, tempdata) {
+        adapter = new CommonAdapter<Map<String, Object>>(this, R.layout.item_list, tempdata) {
             @Override
             public void convert(ViewHolder holder, Map<String, Object> s) {
                 TextView name = holder.getView(R.id.name);
@@ -68,7 +77,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onLongClick(int position) {
                 Toast.makeText(getApplication(), "移除第" + String.valueOf(position) + "个人物",
                         Toast.LENGTH_SHORT).show();
-                data.remove(position);
+                tempdata.remove(position);
                 adapter.notifyItemRemoved(position);//刷新被删除的地方
                 if (position != adapter.getItemCount() - 1) {
                     adapter.notifyItemRangeChanged(position, adapter.getItemCount() - position);
@@ -76,82 +85,77 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         mRecyclerView.setAdapter(adapter);
-
-        // 返回图标的点击事件
-        ImageButton image_back = (ImageButton) findViewById(R.id.back_button);
-        image_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SearchActivity.this.finish();     // 关闭Activity
-            }
-        });
-
-        ImageButton image_search = (ImageButton)findViewById(R.id.search_show_btn);
-        image_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setSearchPageData(adapter); // set the data of recyclerview accotding to the text
-                if (tempdata.size() > 0) {
-                    adapter.notifyItemRangeInserted(0, tempdata.size());
-                }
-        }
-        });
     }
 
-    public void initialSearchPageData() {
-        String[] charactor_name = new String[] { "曹操", "刘备", "孙权",
-                "董卓", "袁绍","张角", "周瑜", "诸葛亮", "司马懿" , "华佗"  };
-        String[] key = new String[] { "caocao", "liubei", "sunquan",
-                "dongzhuo", "yuanshao", "zhangjiao", "zhouyu", "zhugeliang",
-                "simayi", "huatuo"};
-        String[] kingdom = new String[] { "wei", "shu", "wu", "qun", "qun",
-                "qun", "wu", "shu", "wei", "qun"};
-        // initial the data of rectclerview
-        for (int i = 0; i < 10; i++) {
-            Map<String, Object> temp = new LinkedHashMap<>();
-            temp.put("name", charactor_name[i]);
-            temp.put("key", key[i]);
-            temp.put("kingdom", kingdom[i]);
-            data.add(temp);
-        }
-    }
-
-    public void setSearchPageData(CommonAdapter adapter) {
-        EditText editText = (EditText)findViewById(R.id.edit_query);
-        String text = editText.getText().toString();
+    public void setSearchPageData(CommonAdapter adapter, String text) {
         int count = tempdata.size();
         tempdata.clear();
         adapter.notifyItemRangeRemoved(0, count);
+        DBHelper dbHelper = new DBHelper(this);
+        Cursor cursor;
         if (text.equals("蜀") || text.equals("蜀国")) {
-            for (Map<String, Object> item : data) {
-                if (item.get("kingdom").toString().equals("shu")) {
-                    tempdata.add(item);
-                }
-            }
+            cursor = dbHelper.query_kingdom(new String[] {"shu"});
         } else if (text.equals("魏") || text.equals("魏国")) {
-            for (Map<String, Object> item : data) {
-                if (item.get("kingdom").toString().equals("wei")) {
-                    tempdata.add(item);
-                }
-            }
+            cursor = dbHelper.query_kingdom(new String[] {"wei"});
         } else if (text.equals("吴") || text.equals("吴国")) {
-            for (Map<String, Object> item : data) {
-                if (item.get("kingdom").toString().equals("wu")) {
-                    tempdata.add(item);
-                }
-            }
+            cursor = dbHelper.query_kingdom(new String[] {"wu"});
         } else if (text.equals("群") || text.equals("群雄")) {
-            for (Map<String, Object> item : data) {
-                if (item.get("kingdom").toString().equals("qun")) {
-                    tempdata.add(item);
-                }
-            }
+            cursor = dbHelper.query_kingdom(new String[] {"qun"});
         } else {
-            for (Map<String, Object> item : data) {
-                if (item.get("name").toString().equals(text)) {
-                    tempdata.add(item);
-                }
-            }
+            cursor = dbHelper.query_name(new String[] {text});
         }
+        try {
+            while (cursor.moveToNext()) {
+                // initial the data of rectclerview
+                Map<String, Object> temp = new LinkedHashMap<>();
+                temp.put("name", cursor.getString(1));
+                temp.put("kingdom", cursor.getString(2));
+                temp.put("key", cursor.getString(3));
+                tempdata.add(temp);
+            }
+        } catch (Exception e) {
+            Log.i("RUNNING", "error occurs when read data from database");
+            e.printStackTrace();
+        }
+        dbHelper.close();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.  
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search, menu);
+        MenuItem searchItem = menu.findItem(R.id.search_show_btn);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("请输入角色名称或所属势力");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String text = searchView.getQuery().toString();
+                Log.i("RUNNING", "search activity");
+                setSearchPageData(adapter, text); // set the data of recyclerview accotding to the text
+                if (tempdata.size() > 0) {
+                    adapter.notifyItemRangeInserted(0, tempdata.size());
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case android.R.id.home:
+                Log.i("RUNNING", "back to Main activity");
+                SearchActivity.this.finish();
+                break;
+        }
+        return true;
     }
 }
