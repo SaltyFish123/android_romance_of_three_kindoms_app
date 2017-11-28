@@ -1,10 +1,14 @@
 package com.example.jason.lab5;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,11 +25,13 @@ public class MainActivity extends AppCompatActivity {
     //data用于存放recyclerview中的数据
     private List<Map<String, Object>> data = new ArrayList<>();
     private RecyclerView mRecyclerView;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.i("RUNNING", "MAIN");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -85,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("RUNNING", "SEARCH");
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
@@ -92,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("RUNNING", "ADD");
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
                 startActivity(intent);
             }
@@ -99,20 +107,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setMainPageData() {
-        String[] charactor_name = new String[] { "曹操", "刘备", "孙权",
-                "董卓", "袁绍","张角", "周瑜", "诸葛亮", "司马懿" , "华佗"  };
-        String[] key = new String[] { "caocao", "liubei", "sunquan",
-                "dongzhuo", "yuanshao", "zhangjiao", "zhouyu", "zhugeliang",
-                "simayi", "huatuo"};
-        String[] kingdom = new String[] { "wei", "shu", "wu", "qun", "qun",
-                "qun", "wu", "shu", "wei", "qun"};
-        // initial the data of rectclerview
-        for (int i = 0; i < 10; i++) {
-            Map<String, Object> temp = new LinkedHashMap<>();
-            temp.put("name", charactor_name[i]);
-            temp.put("key", key[i]);
-            temp.put("kingdom", kingdom[i]);
-            data.add(temp);
+        dbHelper = new DBHelper(this);
+        dbHelper.init();
+        Cursor cursor = dbHelper.query();
+        int count = 0;
+        try {
+            while (cursor.moveToNext() && count < 10) {
+                // initial the data of rectclerview
+                Map<String, Object> temp = new LinkedHashMap<>();
+                temp.put("name", cursor.getString(1));
+                temp.put("kingdom", cursor.getString(2));
+                temp.put("key", cursor.getString(3));
+                data.add(temp);
+                count++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
