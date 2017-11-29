@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
@@ -61,7 +62,16 @@ public class MainActivity extends AppCompatActivity {
                 ImageView kingdom_belongs = holder.getView(R.id.kingdom);
                 String picture = s.get("key").toString();
                 String kingdom = s.get("kingdom").toString();
-                int pic_id = getResources().getIdentifier(picture, "drawable", getPackageName());
+                int pic_id = 0;
+                try {
+                    pic_id = getResources().getIdentifier(picture, "drawable", getPackageName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (pic_id == 0) {
+                    Log.i("RUNNING", "warning: cannot find the image.");
+                    pic_id = getResources().getIdentifier("unknown", "drawable", getPackageName());
+                }
                 int kingdom_num = getResources().getIdentifier(kingdom, "drawable", getPackageName());
                 Drawable pic_show = getResources().getDrawable(pic_id);
                 Drawable kingdom_pic = getResources().getDrawable(kingdom_num);
@@ -75,10 +85,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, Infor.class);
                 Bundle bundle = new Bundle(); // 携带数据
                 Map<String, Object> item = data.get(position);
-                String item_name = item.get("name").toString();
-                String item_key = item.get("key").toString();
-                bundle.putString("name", item_name);
-                bundle.putString("key", item_key);
+                bundle.putString("name", item.get("name").toString());
+                bundle.putString("key", item.get("key").toString());
+                bundle.putString("kingdom", item.get("kingdom").toString());
                 intent.putExtras(bundle); // 附带上额外数据
                 startActivity(intent);
             }
@@ -115,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 //判断lastChildView的bottom值跟recyclerBottom
                 //判断lastPosition是不是最后一个position
                 //如果两个条件都满足则说明是真正的滑动到了底部
-                if (lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-                    Toast.makeText(getApplicationContext(), "滑动到底了", Toast.LENGTH_SHORT).show();
+                if (lastChildBottom == recyclerBottom && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
+                    Toast.makeText(getApplicationContext(), "没有更多了", Toast.LENGTH_SHORT).show();
                     recyclerView.smoothScrollBy(-50, 0);
                 }
             }

@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto"> 
+    <item android:id="@+id/modify"
+          android:icon="@drawable/edit"
+          android:title="modify"
+          android:orderInCategory="1"
+          yourapp:showAsAction="ifRoom|collapseActionView"/>
+    <item android:id="@+id/delete"
+          android:icon="@drawable/cancel"
+          android:title="delete"
+          android:orderInCategory="1"
+          yourapp:showAsAction="ifRoom"/>
+</menu>
